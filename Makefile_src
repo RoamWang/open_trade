@@ -1,0 +1,40 @@
+#########################################
+#
+# make file
+#########################################
+
+include ./Make.include
+
+# exe, staticlib, dynamiclib
+TYPE:= exe
+
+#output name
+TARGETNAME:= market_front
+
+# include dir
+INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/include
+INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0
+
+# depends lib src
+LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/linux
+LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0/linux
+LIBDIRS += -lprotobuf
+LIBDIRS += -lboost_log -lboost_filesystem -lboost_system -lboost_thread -lrt -pthread -ldl
+
+#src dir
+SRCDIR:= ./src/
+ 
+ # FLAGS
+GLOBAL_CCXXFLAGS += 
+ 
+#CCXXFLAGS= -DDEBUG -g
+ 
+#OFLAGS= -L$(TARGET_PATH_R)
+GLOBAL_CCXXFLAGS += -std=c++11 
+CCXXFLAGS = -fPIC -O2
+#CFLAGS =
+#EXOBJS =
+#EXCLUDESRCS =
+ 
+ 
+include ./Make.share
