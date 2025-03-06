@@ -9,16 +9,19 @@ include ./Make.include
 TYPE:= exe
 
 #output name
-TARGETNAME:= market_front
+TARGETNAME:= open_trade
 
 # include dir
 INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/include
 INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0
+INCLUDES += -Iinclude/CTPIIMini_V1.7.0
 
 # depends lib src
 LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/linux
 LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0/linux
-LIBDIRS += -lprotobuf
+LIBDIRS += -L$include/CTPIIMini_V1.7.0_linux64_api_20240923
+LIBDIRS += -L./lib
+LIBDIRS += -lprotobuf -lthostmduserapi -lthosttraderapi
 LIBDIRS += -lboost_log -lboost_filesystem -lboost_system -lboost_thread -lrt -pthread -ldl
 
 #src dir
