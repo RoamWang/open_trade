@@ -19,7 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\main_dispatcher.cpp" />
+    <ClCompile Include="src\md_spi.cpp" />
+    <ClCompile Include="src\trade_spi.cpp" />
+    <ClCompile Include="src\user_info.cpp" />
+    <ClCompile Include="src\utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\ctp_event.h" />
+    <ClInclude Include="src\main_dispatcher.h" />
+    <ClInclude Include="src\md_spi.h" />
+    <ClInclude Include="src\spsc_queue.h" />
+    <ClInclude Include="src\string_ptr.h" />
+    <ClInclude Include="src\trade_spi.h" />
+    <ClInclude Include="src\user_info.h" />
+    <ClInclude Include="src\utility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
