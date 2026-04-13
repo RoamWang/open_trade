@@ -8,10 +8,14 @@ class trade_spi
 {
 public:
 	trade_spi(optimized_queue* queue);
-	~trade_spi();
+	virtual ~trade_spi();
 
 	void init();
 	void free_api();
+
+	int ret_authenticate(int reqid);
+	int req_login(int reqid);
+
 
 	///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
 	virtual void OnFrontConnected();

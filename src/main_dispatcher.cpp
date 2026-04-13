@@ -1,13 +1,16 @@
 #include "main_dispatcher.h"
 #include "md_spi.h"
 #include "trade_spi.h"
+#include "user_info.h"
+#include "ptr_center.h"
+#include <thread>
 
 main_dispatcher::main_dispatcher(optimized_queue& queue)
 	: queue_(queue)
 	, md_spi_(nullptr)
 	, trade_spi_(nullptr)
 {
-
+	user_info_ = ptr_center::instance().get_user_info();
 }
 
 main_dispatcher::~main_dispatcher()
@@ -79,9 +82,19 @@ void main_dispatcher::handle_task(const ctp_task& task)
 {
 	switch (task.type)
 	{
+	case ctp_type::OnFrontConnected_md:
+	{
+		on_front_connected_md();
+	}
+	break;
+	case ctp_type::OnFrontDisconnected_md:
+	{
+		on_front_disconnected_md(task.data.value);
+	}
+	break;
 	case ctp_type::OnRtnDepthMarketData:
 	{
-		OnRtnDepthMarketData(task.data.quote);
+		on_rtn_depth_marketdata(task.data.quote);
 	}
 	break;
 	default:
@@ -94,7 +107,42 @@ void main_dispatcher::handle_error(const ctp_task& task)
 
 }
 
-void main_dispatcher::OnRtnDepthMarketData(const CThostFtdcDepthMarketDataField& pDepthMarketData)
+void main_dispatcher::on_front_connected_md()
+{
+	md_spi_->req_login(user_info_->generate_reqid());
+}
+
+void main_dispatcher::on_front_disconnected_md(int reason)
+{
+	//STLOG_DEBUG << "market disconnected, reason = " << reason;
+}
+
+void main_dispatcher::on_login_md(const CThostFtdcRspUserLoginField& field)
+{
+	req_subscribe_quote();
+}
+
+void main_dispatcher::on_rtn_depth_marketdata(const CThostFtdcDepthMarketDataField& pDepthMarketData)
+{
+
+}
+
+void main_dispatcher::on_front_connected_td()
+{
+	trade_spi_->req_login(user_info_->generate_reqid());
+}
+
+void main_dispatcher::on_front_disconnected_td(int reason)
+{
+	//STLOG_DEBUG << "trade disconnected, reason = " << reason;
+}
+
+void main_dispatcher::on_login_td(const CThostFtdcRspUserLoginField& field)
+{
+
+}
+
+void main_dispatcher::req_subscribe_quote()
 {
 
 }

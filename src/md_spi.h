@@ -8,10 +8,13 @@ class md_spi
 {
 public:
 	md_spi(optimized_queue* queue);
-	~md_spi();
+	virtual ~md_spi();
 
 	void init();
 	void free_api();
+
+	int req_login(int reqid);
+
 
 	///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
 	virtual void OnFrontConnected();

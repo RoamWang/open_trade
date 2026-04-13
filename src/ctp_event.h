@@ -4,13 +4,13 @@
 
 enum class ctp_type
 {
-	OnRtnDepthMarketData,
 	OnFrontConnected_md,
 	OnFrontDisconnected_md,
 	OnHeartBeatWarning_md,
 	OnRspUserLogin_md,
 	OnRspUserLogout_md,
 	OnRspError,
+	OnRtnDepthMarketData,
 
 	OnFrontConnected_td,
 	OnFrontDisconnected_td,

@@ -2,15 +2,16 @@
 #include <vector>
 #include "utility.h"
 #include "string_ptr.h"
-#include "ThostFtdcMdApi.h"
 #include "user_info.h"
+#include "ptr_center.h"
+#include "log.h"
 
 md_spi::md_spi(optimized_queue* queue)
 	: api_(nullptr)
 	, user_info_(nullptr)
 	, queue_(queue)
 {
-
+	user_info_ = ptr_center::instance().get_user_info();
 }
 
 md_spi::~md_spi()
@@ -25,17 +26,17 @@ void md_spi::init()
 	mdConDir += "//MD_" + user_info_->brokerid_ + "_" + user_info_->investorid_;
 	utility::check_dir(mdConDir);
 
-	CThostFtdcMdApi* pUserApi = CThostFtdcMdApi::CreateFtdcMdApi(mdConDir.c_str(), false, false);
-	pUserApi->RegisterSpi(this);
+	CThostFtdcMdApi* api = CThostFtdcMdApi::CreateFtdcMdApi(mdConDir.c_str(), false, false);
+	api->RegisterSpi(this);
 
 	for (auto& item : user_info_->md_fronts_)
 	{
 		string_ptr ptr(std::string("tcp://") + item);
-		pUserApi->RegisterFront(ptr.get_ptr());
+		api->RegisterFront(ptr.get_ptr());
 
-		//STLOG_DEBUG << "register market front = " << fronts[i];
+		STLOG_DEBUG << "register market front = " << item;
 	}
-	pUserApi->Init();
+	api->Init();
 }
 
 void md_spi::free_api()
@@ -47,6 +48,18 @@ void md_spi::free_api()
 	}
 }
 
+int md_spi::req_login(int reqid)
+{
+	CThostFtdcReqUserLoginField req;
+	memset(&req, 0, sizeof(req));
+	strncpy(req.BrokerID, user_info_->brokerid_.c_str(), sizeof(req.BrokerID));
+	strncpy(req.UserID, user_info_->investorid_.c_str(), sizeof(req.UserID));
+	strncpy(req.Password, user_info_->password_.c_str(), sizeof(req.Password));
+	int res = api_->ReqUserLogin(&req, reqid);
+	return res;
+}
+
+//////////////////////////////////////////////////////////////////////////
 void md_spi::OnFrontConnected()
 {
 	ctp_task task;

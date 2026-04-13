@@ -36,6 +36,9 @@
     <ClCompile Include="src\main_dispatcher.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\ptr_center.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\md_spi.h">
@@ -63,6 +66,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\main_dispatcher.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ptr_center.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

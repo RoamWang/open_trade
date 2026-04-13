@@ -10,17 +10,20 @@ TYPE:= exe
 
 #output name
 TARGETNAME:= open_trade
+API := CTPIIMini_V1.7.0
 
 # include dir
 INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/include
 INCLUDES += -I$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0
-INCLUDES += -Iinclude/CTPIIMini_V1.7.0
+INCLUDES += -Iinclude/$(API)/include
+INCLUDES += -Iinclude/liblog
 
 # depends lib src
 LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/protobuf-3.4.x/linux
 LIBDIRS += -L$(NAUT_ROOTDIR)/thirdparty/boost_1_65_0/linux
-LIBDIRS += -L$include/CTPIIMini_V1.7.0_linux64_api_20240923
+LIBDIRS += -L./include/$(API)/x64
 LIBDIRS += -L./lib
+LIBDIRS += -llog
 LIBDIRS += -lprotobuf -lthostmduserapi -lthosttraderapi
 LIBDIRS += -lboost_log -lboost_filesystem -lboost_system -lboost_thread -lrt -pthread -ldl
 

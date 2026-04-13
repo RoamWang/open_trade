@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <vector>
 
 class user_info
 {
@@ -7,6 +9,12 @@ public:
 	~user_info();
 
 	void init_test();
+
+	int generate_reqid()
+	{
+		static int reqid = 1000;
+		return reqid++;
+	}
 
 public:
 	std::string brokerid_;

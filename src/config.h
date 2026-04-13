@@ -1,12 +1,15 @@
 #pragma once
 
-class user_info;
 class config
 {
 public:
+	static config& instance();
+
+
+
+private:
 	config();
 	~config();
 
 private:
-	user_info* user_info_;
 };
