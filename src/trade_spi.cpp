@@ -21,6 +21,7 @@ trade_spi::~trade_spi()
 
 void trade_spi::init()
 {
+	STLOG_DEBUG << "init td";
 	std::string tdConDir = utility::get_executable_path() + "data";
 	utility::check_dir(tdConDir);
 	tdConDir += "//TD_" + user_info_->brokerid_ + "_" + user_info_->investorid_;
@@ -32,9 +33,9 @@ void trade_spi::init()
 	api_->SubscribePublicTopic(THOST_TERT_RESTART);
 	for (auto& item : user_info_->md_fronts_)
 	{
+		STLOG_DEBUG << "trade front = " << item;
 		string_ptr ptr(std::string("tcp://") + item);
 		api_->RegisterFront(ptr.get_ptr());
-		STLOG_DEBUG << "trade front = " << item;
 	}
 	api_->Init();
 }

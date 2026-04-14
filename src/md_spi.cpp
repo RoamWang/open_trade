@@ -21,6 +21,7 @@ md_spi::~md_spi()
 
 void md_spi::init()
 {
+	STLOG_DEBUG << "init md";
 	std::string mdConDir = utility::get_executable_path() + "data";
 	utility::check_dir(mdConDir);
 	mdConDir += "//MD_" + user_info_->brokerid_ + "_" + user_info_->investorid_;
@@ -31,10 +32,10 @@ void md_spi::init()
 
 	for (auto& item : user_info_->md_fronts_)
 	{
+		STLOG_DEBUG << "register market front = " << item;
+
 		string_ptr ptr(std::string("tcp://") + item);
 		api->RegisterFront(ptr.get_ptr());
-
-		STLOG_DEBUG << "register market front = " << item;
 	}
 	api->Init();
 }
