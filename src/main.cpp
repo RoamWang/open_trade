@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
-#include "config.h"
 #include "ptr_center.h"
 #include "spsc_queue.h"
 #include "main_dispatcher.h"
@@ -15,8 +14,10 @@ int main(int argc, char* argv[])
 
 	STLOG_DEBUG << "starting";
 
-	config::instance();
+	printf("--- FORCING PTR_CENTER INIT ---\n");
 	ptr_center::instance();
+	ptr_center::instance().init();
+	printf("--- PTR_CENTER INIT DONE ---\n");
 
 	optimized_queue queue;
 	main_dispatcher dispatcher(queue);

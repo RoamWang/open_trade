@@ -10,11 +10,7 @@ public:
 
 	void init_test();
 
-	int generate_reqid()
-	{
-		static int reqid = 1000;
-		return reqid++;
-	}
+	int generate_reqid();
 
 public:
 	std::string brokerid_;

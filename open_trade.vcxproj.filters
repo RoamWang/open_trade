@@ -30,9 +30,6 @@
     <ClCompile Include="src\utility.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\config.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\main_dispatcher.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\utility.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\config.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\user_info.h">

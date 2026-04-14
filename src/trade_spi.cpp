@@ -31,10 +31,10 @@ void trade_spi::init()
 	api_->RegisterSpi(this);
 	api_->SubscribePrivateTopic(THOST_TERT_RESTART);
 	api_->SubscribePublicTopic(THOST_TERT_RESTART);
-	for (auto& item : user_info_->md_fronts_)
+	for (auto& item : user_info_->td_fronts_)
 	{
-		STLOG_DEBUG << "trade front = " << item;
 		string_ptr ptr(std::string("tcp://") + item);
+		STLOG_DEBUG << "trade front = " << ptr.get_ptr();
 		api_->RegisterFront(ptr.get_ptr());
 	}
 	api_->Init();
@@ -75,6 +75,7 @@ int trade_spi::req_login(int reqid)
 
 void trade_spi::OnFrontConnected()
 {
+	STLOG_DEBUG << "OnFrontConnected";
 	ctp_task task;
 	task.type = ctp_type::OnFrontConnected_td;
 	queue_->push(task);

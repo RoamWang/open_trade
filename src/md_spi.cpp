@@ -27,17 +27,16 @@ void md_spi::init()
 	mdConDir += "//MD_" + user_info_->brokerid_ + "_" + user_info_->investorid_;
 	utility::check_dir(mdConDir);
 
-	CThostFtdcMdApi* api = CThostFtdcMdApi::CreateFtdcMdApi(mdConDir.c_str(), false, false);
-	api->RegisterSpi(this);
+	api_ = CThostFtdcMdApi::CreateFtdcMdApi(mdConDir.c_str(), false, false);
+	api_->RegisterSpi(this);
 
 	for (auto& item : user_info_->md_fronts_)
 	{
-		STLOG_DEBUG << "register market front = " << item;
-
 		string_ptr ptr(std::string("tcp://") + item);
-		api->RegisterFront(ptr.get_ptr());
+		STLOG_DEBUG << "register market front = " << ptr.get_ptr();
+		api_->RegisterFront(ptr.get_ptr());
 	}
-	api->Init();
+	api_->Init();
 }
 
 void md_spi::free_api()
@@ -51,18 +50,34 @@ void md_spi::free_api()
 
 int md_spi::req_login(int reqid)
 {
+	STLOG_INFO << "begin";
 	CThostFtdcReqUserLoginField req;
 	memset(&req, 0, sizeof(req));
+	if (!user_info_)
+	{
+		STLOG_ERROR << "user_info_ is null";
+	}
+	STLOG_ERROR << "111";
 	strncpy(req.BrokerID, user_info_->brokerid_.c_str(), sizeof(req.BrokerID));
+	STLOG_ERROR << "222";
 	strncpy(req.UserID, user_info_->investorid_.c_str(), sizeof(req.UserID));
+	STLOG_ERROR << "333";
 	strncpy(req.Password, user_info_->password_.c_str(), sizeof(req.Password));
+	STLOG_ERROR << "444";
+	if (!api_)
+	{
+		STLOG_ERROR << "api_ is null";
+	}
 	int res = api_->ReqUserLogin(&req, reqid);
+
+	STLOG_INFO << "ReqUserLogin res = " << res;
 	return res;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void md_spi::OnFrontConnected()
 {
+	STLOG_DEBUG << "OnFrontConnected";
 	ctp_task task;
 	task.type = ctp_type::OnFrontConnected_md;
 	queue_->push(task);

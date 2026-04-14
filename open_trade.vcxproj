@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\main_dispatcher.cpp" />
     <ClCompile Include="src\md_spi.cpp" />
@@ -29,7 +28,6 @@
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\config.h" />
     <ClInclude Include="src\ctp_event.h" />
     <ClInclude Include="src\main_dispatcher.h" />
     <ClInclude Include="src\md_spi.h" />

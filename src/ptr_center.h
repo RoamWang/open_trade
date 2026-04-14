@@ -6,6 +6,8 @@ class ptr_center
 public:
 	static ptr_center& instance();
 
+	void init();
+
 	user_info* get_user_info() const;
 private:
 	user_info* user_info_;

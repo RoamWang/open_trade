@@ -4,6 +4,7 @@
 #include "user_info.h"
 #include "ptr_center.h"
 #include <thread>
+#include "log.h"
 
 main_dispatcher::main_dispatcher(optimized_queue& queue)
 	: queue_(queue)
@@ -104,11 +105,23 @@ void main_dispatcher::handle_task(const ctp_task& task)
 
 void main_dispatcher::handle_error(const ctp_task& task)
 {
-
+	STLOG_ERROR << "errid = " << task.rsp_info.errid << ", err_msg = " << task.rsp_info.err_msg;
 }
 
 void main_dispatcher::on_front_connected_md()
 {
+	printf(">>> CALLBACK TRIGGERED: md_spi=%p, user_info=%p\n", (void*)md_spi_, (void*)user_info_);
+	fflush(stdout);
+
+	STLOG_DEBUG << "md connected";
+	if (!md_spi_)
+	{
+		STLOG_ERROR << "md_spi_ is null";
+	}
+	if (!user_info_)
+	{
+		STLOG_ERROR << "user_info_ is null";
+	}
 	md_spi_->req_login(user_info_->generate_reqid());
 }
 
@@ -119,6 +132,7 @@ void main_dispatcher::on_front_disconnected_md(int reason)
 
 void main_dispatcher::on_login_md(const CThostFtdcRspUserLoginField& field)
 {
+	STLOG_DEBUG << "md login";
 	req_subscribe_quote();
 }
 
